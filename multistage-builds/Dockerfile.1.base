@@ -1,0 +1,17 @@
+FROM node
+
+WORKDIR /app
+
+# Install react-scripts
+RUN npm install -g react-scripts
+
+COPY package.json . 
+COPY package-lock.json . 
+
+RUN npm install
+
+COPY . .
+
+ENV NODE_OPTIONS=--max_old_space_size=4096
+
+ENTRYPOINT npm run start --max-http-header 16000
