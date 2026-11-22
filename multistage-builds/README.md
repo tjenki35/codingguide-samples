@@ -4,5 +4,8 @@ Source samples for the public to enjoy
 `docker run -w /app -v "${PWD}:/app" node npm install`
 
 ### Building a docker image in this repo
-`docker build . -t myserver --target=... -f Dockerfile.1.base`
+`docker build . -t myserver --target=... -f Dockerfile.3.production-bundle`
+
+When mounting the source into a container, add `-v /app/node_modules` so the
+image's Linux `node_modules` stays in place (Vite ships native binaries).
 
