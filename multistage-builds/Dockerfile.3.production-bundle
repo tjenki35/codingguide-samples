@@ -1,25 +1,21 @@
-FROM node as install
+FROM node:26 AS install
 
 WORKDIR /app
 
-RUN npm install -g react-scripts
+COPY package.json .
+COPY package-lock.json .
 
-COPY package.json . 
-COPY package-lock.json . 
-
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-FROM install as dev
+FROM install AS dev
 
-ENV NODE_OPTIONS=--max_old_space_size=4096
-
-ENTRYPOINT npm run start --max-http-header 16000
+ENTRYPOINT ["npm", "run", "start"]
 
 # Production app builder
-FROM install as production
+FROM install AS production
 
 # [Other production build commands, configuration]
 
-ENTRYPOINT ["npm", "run-script", "build"]
+ENTRYPOINT ["npm", "run", "build"]
